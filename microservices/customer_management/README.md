@@ -4,6 +4,7 @@ docker build  --no-cache -t abc_msa_customer_management .
 docker run -itd -p 8003:8080 --mount source=customer_management_volume,target=/app_data --name customer_management_container abc_msa_customer_management
 ```
 
+
 # Setting Mysql
 https://stackoverflow.com/questions/39281594/error-1698-28000-access-denied-for-user-rootlocalhost
 ```
