@@ -19,7 +19,7 @@ mycursor = mydb.cursor()
 
 service_name = "payment_management"
 service_descr = "ABC-MSA Payment Management"
-service_json = jsonify({"service_name":service_name, "service_descr":service_descr})
+# service_json = jsonify({"service_name":service_name, "service_descr":service_descr})
 
 service_info =   """
 <!DOCTYPE html>

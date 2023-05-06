@@ -1,0 +1,65 @@
+version: "3.9"
+services:
+  customer_management_container:
+    build: ./customer_management/
+    image: abc_msa_customer_management
+    container_name: customer 
+    ports:
+      - "8003:8080"
+    volumes:
+      - customer_management_volume:/app_data
+  product_management_container:
+    build: ./product_management/
+    image: abc_msa_product_management
+    container_name: product
+    ports:
+      - "8004:8080"
+    volumes:
+      - product_management_volume:/app_data
+  order_management_container:
+    build: ./order/
+    image: abc_msa_order_management
+    container_name: order
+    ports:
+      - "8005:8080"
+    volumes:
+      - order_management_volume:/app_data
+  inventory_management_container:
+    build: ./inventory/ 
+    image: abc_msa_inventory_management
+    container_name: inventory
+    ports:
+      - "8006:8080"
+    volumes:
+      - inventory_management_volume:/app_data
+  payment_management_container:
+    build: ./payment/ 
+    image: abc_msa_payment_management
+    container_name: payment
+    ports:
+      - "8007:8080"
+    volumes:
+      - payment_management_volume:/app_data              
+  dashboard:
+    build: ./dashboard/ 
+    image: abc_msa_dashboard
+    container_name: dashboard
+    ports:
+      - "8002:8080"
+      - "80:80"
+    volumes:
+      - dashboard_volume:/app_data
+    depends_on:
+      - customer_management_container
+      - product_management_container
+      - order_management_container
+      - inventory_management_container
+      - payment_management_container
+volumes:
+  customer_management_volume:
+  product_management_volume:
+  order_management_volume:
+  inventory_management_volume:
+  payment_management_volume:
+  dashboard_volume:
+  

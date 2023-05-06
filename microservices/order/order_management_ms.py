@@ -1,7 +1,8 @@
 #ORDER MS
 
 from flask import Flask, jsonify, request
-from flask_mysqldb import MySQL
+#from flask_mysqldb import MySQL
+import mysql.connector
 
 # create a Flask instance
 app = Flask(__name__)
@@ -15,9 +16,11 @@ mydb = mysql.connector.connect(
   database="abc_msa"
 )
 
+mycursor = mydb.cursor()
+
 service_name = "order"
 service_descr = "ABC-MSA Order Management"
-service_json = jsonify({"service_name":service_name, "service_descr":service_descr})
+# service_json = jsonify({"service_name":service_name, "service_descr":service_descr})
 
 #!!! Configuration Params (to be part of a conf file later)
 REQ_TIMEOUT = 5
@@ -43,7 +46,6 @@ service_info =   """
 def about():
     return service_info
 
-mysql = MySQL(app)
 
 
 # An API to create a new order

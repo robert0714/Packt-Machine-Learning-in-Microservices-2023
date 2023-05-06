@@ -2,9 +2,11 @@
 
 from flask import Flask, render_template, request, redirect, jsonify
 import requests
-
+import socket
+ 
 # create a Flask instance
-app.config['JSON_SORT_KEYS'] = False
+app = Flask(__name__)
+app.config['JSON_SORT_KEYS'] = False 
 
 # Product Management API endpoints
 PRODUCTS_API = "http://localhost:8004/products"
@@ -27,21 +29,17 @@ INVENTORY_API = "http://localhost:8006/inventory"
 INVENTORY_ITEM_API = "http://localhost:8006/inventory/{}"
 
 
-# Connect to MySQL database
-mydb = mysql.connector.connect(
-  host="localhost",
-  user="root",
-  password="",
-  database="abc_msa"
-)
-
-mycursor = mydb.cursor()
-
 ##############################
 ###### The root / URL Route points to the home page
 @app.route('/')
 def home():
-    return render_template('index.html')
+    try:
+        host_name = socket.gethostname()
+        host_ip = socket.gethostbyname(host_name)
+        return render_template('index.html', hostname=host_name, ip=host_ip)
+    except:
+        return render_template('error.html')
+    
 
 ##############################
 ###### Product list page

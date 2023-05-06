@@ -5,6 +5,7 @@ import os, time, random, csv
 import mysql.connector
 
 # create a Flask instance
+app = Flask(__name__)
 app.config['JSON_SORT_KEYS'] = False
 
 # Connect to MySQL database
@@ -20,7 +21,6 @@ mycursor = mydb.cursor()
 
 service_name = "inventory_management"
 service_descr = "ABC-MSA Inventory Management"
-service_json = jsonify({"service_name":service_name, "service_descr":service_descr})
 
 delay_cfg_filename = "ms_delays.cfg"
 
@@ -101,6 +101,7 @@ def abc_msa():
 
     def service_info():
         # returns a JSON with service information
+        service_json = jsonify({"service_name":service_name, "service_descr":service_descr})
         return service_json
     
     # Check if a valid API function has been called
