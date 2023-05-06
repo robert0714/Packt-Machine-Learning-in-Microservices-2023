@@ -18,7 +18,7 @@ jobs:
       - uses: actions/checkout@v1
       - name: Get current date
         id: date
-        run: echo "::set-output name=date::$(date +'%Y-%m-%d')
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
       - name: Deploy to Github Package Registry
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
