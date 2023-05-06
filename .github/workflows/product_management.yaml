@@ -22,6 +22,7 @@ jobs:
       - name: Deploy to Github Package Registry
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        working-directory: ./microservices/product_management/
         run: |
           echo $GITHUB_TOKEN | docker login ghcr.io -u USERNAME --password-stdin
           docker build --build-arg GITHUB_TOKEN=$GITHUB_TOKEN -t ghcr.io/robert0714/abc_msa_product_management:latest .
