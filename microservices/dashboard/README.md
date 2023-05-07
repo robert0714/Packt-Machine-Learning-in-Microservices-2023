@@ -1,6 +1,6 @@
 ```
 docker build  --no-cache -t abc_msa_dashboard .
-docker run -itd -p 8002:8080 --mount source=dashboard_volume,target=/app_data --name dashboard_container abc_msa_dashboard
+docker run -itd -p 8002:8080 -p 80:80 --mount source=dashboard_volume,target=/app_data --name dashboard_container abc_msa_dashboard
 ```
 
 

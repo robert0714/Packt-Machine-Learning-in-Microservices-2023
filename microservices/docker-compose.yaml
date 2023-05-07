@@ -1,5 +1,24 @@
 version: "3.9"
 services:
+  tyk-gateway:
+    image: docker.tyk.io/tyk-gateway/tyk-gateway:v4.3.3
+    container_name: gateway 
+    ports:
+      - 8081:8080 
+    volumes:
+      - ./tyk.standalone.conf:/opt/tyk-gateway/tyk.conf
+      - ./apps:/opt/tyk-gateway/apps
+      - ./middleware:/opt/tyk-gateway/middleware
+      - ./certs:/opt/tyk-gateway/certs
+    environment:
+      - TYK_GW_SECRET=foo
+    depends_on:
+      - tyk-redis
+  tyk-redis:
+    image: redis:6.2.7-alpine
+    container_name: tyk-redis  
+    ports:
+      - 6379:6379
   customer_management_container:
     build: ./customer_management/
     image: abc_msa_customer_management
