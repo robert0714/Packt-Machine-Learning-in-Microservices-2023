@@ -217,9 +217,12 @@ As shown in ***Figure 10.5***, under heavy API traffic, a failure to the Invento
 
 ###### Figure 10.5: The Payment microservice is down
 ```mermaid
-graph TD;
-    "Order microservice"-->"Payment microservice";
-    "Payment microservice"-->"Inventory microservice"; 
+%%{init: {'theme':'forest'}}%%
+flowchart LR;
+          A[Order microservice]-->B[Payment microservice];
+     B[Payment microservice]-->C([Inventory microservice]); 
+     style C fill:#f9f,stroke:#333,stroke-width:4px
+     click C "https://mermaid.js.org/syntax/flowchart.html" _blank
 ```
 
 For the PAD to respond with healing actions, each of the PAD’s detected anomaly types has to have healing actions defined for it.
