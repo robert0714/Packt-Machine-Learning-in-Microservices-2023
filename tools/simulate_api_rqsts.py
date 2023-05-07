@@ -102,9 +102,13 @@ if len(sys.argv) > 1:
 
         url_list = []
         if len(sys.argv) > 2:
-            url_list_file = open(sys.argv[2], "r")
-            for url in url_list_file:
-                url_list.append(url)
+            tmp = sys.argv[2];
+            if "http" in tmp:
+                url_list.append(tmp);
+            else:    
+                url_list_file = open(tmp, "r");
+                for url in url_list_file:
+                    url_list.append(url)
             
     else:
         print("ERROR: API Calls Rate needs to be an integer")
