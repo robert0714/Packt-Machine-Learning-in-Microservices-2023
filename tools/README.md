@@ -15,7 +15,7 @@ In the randomly-paced case, each API call is sent after a random period, TR, fro
 
 $$e^{-\frac{t}{RC}}$$
 
-The sum of all TRs, however, will still be approximately equal to the configured requests/min. In our example here, the load is 600 API requests/min.
+The sum of all T<sub>R</sub>s, however, will still be approximately equal to the configured requests/min. In our example here, the load is 600 API requests/min.
 
 Uniformly paced requests are better when you are manually analyzing how a particular microservice responds to the API load, while randomly paced requests are a better representation of a real-time production API request load.
 
