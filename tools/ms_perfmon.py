@@ -1,4 +1,5 @@
 import sys, os, asyncio, aiohttp, datetime, time
+from pathlib import Path
 
 build_no = "0.1"
 usage_help = """
@@ -49,9 +50,13 @@ if pull_interval.isnumeric():
 
     url_list = []
     if len(sys.argv) > 2:
-        url_list_file = open(sys.argv[2], "r")
-        for url in url_list_file:
-            url_list.append(url)
+        tmp = sys.argv[2];
+        if "http" in tmp:
+            url_list.append(tmp);
+        else:    
+            url_list_file = open(tmp, "r");
+            for url in url_list_file:
+                url_list.append(url)
 
 else:
     print("ERROR: API Calls Rate needs to be an integer")
@@ -67,6 +72,13 @@ def create_url_filename(url):
     return filename
 
 async def get(url, session):
+    #to get the current working directory
+    directory = os.getcwd()
+    # print("---------------------------------------")
+    # print(directory)
+    if not os.path.exists(directory+"/perfmon_stats"):
+       os.makedirs(directory+"/perfmon_stats")
+
     try:
         request_datetime = str(datetime.datetime.now())
         start_time = time.time()
@@ -76,11 +88,12 @@ async def get(url, session):
             response_status_code = response.status
             response_total_seconds = str(end_time-start_time)
             
-            filename = "perfmon_stats/" + create_url_filename(url) + ".csv"
+            filename = directory+"/perfmon_stats/" + create_url_filename(url) + ".csv"
             file_exists = os.path.isfile(filename)
             if file_exists:
                 f = open(filename, "a")                
             else:
+                Path(filename).touch() 
                 f = open(filename, "w")
                 f.write("url,request_datetime,response_time,status_code\n")
 
@@ -88,11 +101,12 @@ async def get(url, session):
             f.close()
             
     except Exception as e:
-        filename = "perfmon_stats/" + create_url_filename(url) + ".csv"
+        filename = directory+"/perfmon_stats/" + create_url_filename(url) + ".csv"
         file_exists = os.path.isfile(filename)
         if file_exists:
             f = open(filename, "a")                
         else:
+            Path(filename).touch() 
             f = open(filename, "w")
             f.write("url,request_datetime,response_time\n")
 
